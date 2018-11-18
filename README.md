@@ -1,3 +1,8 @@
+# Info
+Aktuell steht die Entwicklung des ganzen, da die ICS Dateien aus meinem Google Kalender Ereignisse aus der Software der Uni mit der richtigen Zeit anzeigt und alles andere mit UTC statt mit meiner Zeitzone.....
+Möglichkeiten
+- Auf anderen Kalender welchseln
+- Keine Termine mehr importieren, sondern alle selber anlegen
 # E-Ink-Kalender-Server
 Ich wollte einen E-Ink Kalender mit einem ESP-8266 bauen. Da es noch keinen Code gab, der genau das machte, was ich wollte, habe ich angefangen nach ähnlichen Projekten zu suchen.
 [Link zum Client Code (ESP8266)](https://github.com/zottelchin/E-Ink-Kalender-Client)
