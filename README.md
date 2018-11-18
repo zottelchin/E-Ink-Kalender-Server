@@ -26,6 +26,13 @@ Bekommt der Server einen GET Request (URL kann frei gewählt werden, wird auch n
 - [ics-golang](https://github.com/PuloV/ics-golang)
 ### Client Funktion
 Der Client verbindet sich mit dem WLAN und ruft dann die voreingestellte Seite auf und bekommt so die Daten. Der String wird aufgesplitte (an den ';') und dann Zeilenweise angezeigt.
+#### Bilder 
+##### Startbildschirm:
+![Startbildschirm](/Bilder/IMG_20181118_220549.jpg)
+##### Wenn der Server nicht erreicht werden kann, dann wird dieser Bildschrim angezeigt:
+![Keine Serververbindung](/Bilder/IMG_20181118_221312.jpg)
+##### Übersicht über die 5 aktuellsten Termine
+![Kalenderansicht](/Bilder/IMG_20181118_220928.jpg)
 #### verwendete Bibliotheken anderer Nutzer:
 - [EPD Driver](https://github.com/ZinggJM/GxEPD)
 - Adafruit Fonts
@@ -34,4 +41,4 @@ Der Client verbindet sich mit dem WLAN und ruft dann die voreingestellte Seite a
 - Key an Route hängen, damit Daten halbwegs sicher sind
 - .ics Links aus Datei lesen
 ### Client
-- UTF-8 Unterstützung U8g2-Font ist aktuell der Plan 
+- [x] UTF-8 Unterstützung U8g2-Font ist aktuell der Plan 
