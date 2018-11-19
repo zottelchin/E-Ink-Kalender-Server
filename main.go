@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/PuloV/ics-golang"
+	"github.com/rjhorniii/ics-golang"
 )
 
 func main() {
@@ -39,7 +38,7 @@ func next10Events(url string) string {
 		//Füge alle zukünftigen und aktuellen Termine in ein Array zusammen
 		for _, calendar := range cal {
 			//  Alle Events, die noch nicht zuende sind werden gesammelt
-			for _, event := range calendar.GetEvents() {
+			for _, event := range calendar.GetUpcomingEvents(5) {
 				if now.Before(event.GetEnd()) {
 					allEvents = append(allEvents, event)
 				}
@@ -56,10 +55,13 @@ func next10Events(url string) string {
 			if i >= 5 {
 				break
 			}
-			if strings.HasPrefix(event.GetSummary(), "Ü") {
-				event.SetSummary("U" + event.GetSummary()[2:])
+
+			if len(event.GetDTZID()) == 0 {
+				returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Local().Day(), event.GetStart().Local().Month(), event.GetStart().Local().Hour(), event.GetStart().Local().Minute(), event.GetEnd().Local().Hour(), event.GetEnd().Local().Minute(), event.GetLocation())
+			}else {
+				returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Day(), event.GetStart().Month(), event.GetStart().Hour(), event.GetStart().Minute(), event.GetEnd().Hour(), event.GetEnd().Minute(), event.GetLocation())
 			}
-			returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Day(), event.GetStart().Month(), event.GetStart().Hour(), event.GetStart().Minute(), event.GetEnd().Hour(), event.GetEnd().Minute(), event.GetLocation())
+
 		}
 		return returnString
 	}
