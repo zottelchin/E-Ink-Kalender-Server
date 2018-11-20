@@ -1,8 +1,3 @@
-# Info
-Aktuell steht die Entwicklung des ganzen, da die ICS Dateien aus meinem Google Kalender Ereignisse aus der Software der Uni mit der richtigen Zeit anzeigt und alles andere mit UTC statt mit meiner Zeitzone.....
-Möglichkeiten
-- Auf anderen Kalender welchseln
-- Keine Termine mehr importieren, sondern alle selber anlegen
 # E-Ink-Kalender-Server
 Ich wollte einen E-Ink Kalender mit einem ESP-8266 bauen. Da es noch keinen Code gab, der genau das machte, was ich wollte, habe ich angefangen nach ähnlichen Projekten zu suchen.
 [Link zum Client Code (ESP8266)](https://github.com/zottelchin/E-Ink-Kalender-Client)
@@ -23,7 +18,7 @@ Ein schöner Nebeneffekt des Selberschreibens ist, dass ich direkt .ics Dateien 
 Bekommt der Server einen GET Request (URL kann frei gewählt werden, wird auch noch in eine Configuration ausgelagert werden), ruft er die ics Dateien ab und filtert alle vergangenen Ereignisse raus und sortiert den Rest nach dem Start-Zeitpunkt. Aus dieser Liste werden die 5 aktuellsten Einträge in einen String überfühert. Diesem wird noch das aktuelle Datum angefügt und dann als Antwort gesendet.
 #### verwendete Bibliotheken anderer Nutzer:
 - [Gin Gonic](https://github.com/gin-gonic/gin)
-- [ics-golang](https://github.com/PuloV/ics-golang)
+- [ics-golang Fork](https://github.com/rjhorniii/ics-golang/tree/ical2org)
 ### Client Funktion
 Der Client verbindet sich mit dem WLAN und ruft dann die voreingestellte Seite auf und bekommt so die Daten. Der String wird aufgesplitte (an den ';') und dann Zeilenweise angezeigt.
 #### Bilder 
