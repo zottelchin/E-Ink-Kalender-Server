@@ -15,9 +15,10 @@ import (
 )
 
 func main() {
+	ics.DeleteTempFiles = true
 	go async()
 	r := gin.Default()
-	r.GET("/EA", func(c *gin.Context) {
+	r.GET("/ErcHRbrXh6aE7KCOfbuFzfvP6lxyoA", func(c *gin.Context) {
 		content, err := ioutil.ReadFile("/var/E-Ink/cache.txt")
 		if err != nil {
 			c.String(500, stamp()+"Error; ............; ............; Datei konnte; .......; ........; nicht gelesen werden; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;")
@@ -29,16 +30,18 @@ func main() {
 }
 
 func async() {
+	c := config.Open("/var/E-Ink/config.yaml")
+	first := true
 	for {
+		if first {
+			first = false
+		} else {
+			time.Sleep(7 * time.Minute)
+		}
 		fmt.Println("Update Data....")
 		everything := []ics.Event{}
-		c := config.Open("/var/E-Ink/config.yaml")
-		for _, d := range c.Get("Server").AnyList() {
-			for k, e := range d.AnyMap() {
-				if k == "ics" {
-					everything = append(everything, next5Events(e.String())...)
-				}
-			}
+		for _, e := range c.Get("Server").StringList() {
+			everything = append(everything, next5Events(e)...)
 		}
 
 		//Sortiere die Termine
@@ -76,6 +79,7 @@ func stamp() string {
 }
 
 func next5Events(url string) []ics.Event {
+	fmt.Printf("parsing next 7 Events from %s\n", url)
 	parser := ics.New()
 	ics.RepeatRuleApply = true
 	ics.MaxRepeats = 200
@@ -96,6 +100,7 @@ func next5Events(url string) []ics.Event {
 				}
 			}
 		}
+		fmt.Printf("next 7 events are: \n %v\n", allEvents)
 		return allEvents
 	}
 	return nil
