@@ -1,0 +1,10 @@
+[Unit]
+Description=Kalender Updater
+
+[Service]
+Type=oneshot
+WorkingDirectory=/var/e-ink
+ExecStart=/var/noten/e-ink-update
+
+[Install]
+WantedBy=basic.target

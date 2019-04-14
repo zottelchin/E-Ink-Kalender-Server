@@ -9,69 +9,42 @@ import (
 
 	"teahub.io/momar/config"
 
-	"github.com/gin-gonic/gin"
-
-	"github.com/rjhorniii/ics-golang"
+	ics "github.com/rjhorniii/ics-golang"
 )
 
 func main() {
 	ics.DeleteTempFiles = true
-	go async()
-	r := gin.Default()
-	r.GET("/ErcHRbrXh6aE7KCOfbuFzfvP6lxyoA", func(c *gin.Context) {
-		content, err := ioutil.ReadFile("/var/E-Ink/cache.txt")
-		if err != nil {
-			c.String(500, stamp()+"Error; ............; ............; Datei konnte; .......; ........; nicht gelesen werden; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;")
-		} else {
-			c.String(200, string(content))
-		}
-	})
-	r.Run(":6342")
-}
-
-func async() {
 	c := config.Open("/var/E-Ink/config.yaml")
-	first := true
-	for {
-		if first {
-			first = false
-		} else {
-			time.Sleep(7 * time.Minute)
-		}
-		fmt.Println("Update Data....")
-		everything := []ics.Event{}
-		for _, e := range c.Get("Server").StringList() {
-			everything = append(everything, next5Events(e)...)
-		}
-
-		//Sortiere die Termine
-		sort.Slice(everything, func(i, j int) bool {
-			return everything[i].GetStart().Before(everything[j].GetStart())
-		})
-
-		returnString := ""
-		for i, event := range everything {
-			if i >= 5 {
-				break
-			}
-
-			if len(event.GetDTZID()) == 0 {
-				returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Local().Day(), event.GetStart().Local().Month(), event.GetStart().Local().Hour(), event.GetStart().Local().Minute(), event.GetEnd().Local().Hour(), event.GetEnd().Local().Minute(), event.GetLocation())
-			} else {
-				returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Day(), event.GetStart().Month(), event.GetStart().Hour(), event.GetStart().Minute(), event.GetEnd().Hour(), event.GetEnd().Minute(), event.GetLocation())
-			}
-
-		}
-
-		err := ioutil.WriteFile("/var/E-Ink/cache.txt", []byte(stamp()+returnString), 0644)
-		if err != nil {
-			fmt.Println("Error writing File")
-			time.Sleep(time.Minute)
-			continue
-		}
-		fmt.Println("Next Data Collection in 7 Min: " + time.Now().Add(7*time.Minute).Format("Jan 2 15:04:05 2006"))
-		time.Sleep(7 * time.Minute)
+	fmt.Println("Update Data....")
+	everything := []ics.Event{}
+	for _, e := range c.Get("Server").StringList() {
+		everything = append(everything, next5Events(e)...)
 	}
+
+	//Sortiere die Termine
+	sort.Slice(everything, func(i, j int) bool {
+		return everything[i].GetStart().Before(everything[j].GetStart())
+	})
+
+	returnString := ""
+	for i, event := range everything {
+		if i >= 5 {
+			break
+		}
+
+		if len(event.GetDTZID()) == 0 {
+			returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Local().Day(), event.GetStart().Local().Month(), event.GetStart().Local().Hour(), event.GetStart().Local().Minute(), event.GetEnd().Local().Hour(), event.GetEnd().Local().Minute(), event.GetLocation())
+		} else {
+			returnString += fmt.Sprintf(" %s; am %d.%d von %d:%02d bis %d:%02d Uhr; Ort: %s;", event.GetSummary(), event.GetStart().Day(), event.GetStart().Month(), event.GetStart().Hour(), event.GetStart().Minute(), event.GetEnd().Hour(), event.GetEnd().Minute(), event.GetLocation())
+		}
+
+	}
+
+	err := ioutil.WriteFile("/var/E-Ink/cache.txt", []byte(stamp()+returnString), 0644)
+	if err != nil {
+		fmt.Println("Error writing File")
+	}
+	fmt.Println("Update done.")
 }
 
 func stamp() string {

@@ -1,0 +1,11 @@
+[Unit]
+Description=Kalender Server
+
+[Service]
+Type=simple
+ExecStart=/var/noten/e-ink
+Restart=on-failure
+WorkingDirectory=/var/e-ink
+
+[Install]
+WantedBy=multi-user.target
