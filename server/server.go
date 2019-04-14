@@ -11,7 +11,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.GET("/ErcHRbrXh6aE7KCOfbuFzfvP6lxyoA", func(c *gin.Context) {
-		content, err := ioutil.ReadFile("/var/E-Ink/cache.txt")
+		content, err := ioutil.ReadFile("./cache.txt")
 		if err != nil {
 			c.String(500, stamp()+"Error; ............; ............; Datei konnte; .......; ........; nicht gelesen werden; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;")
 		} else {

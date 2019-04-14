@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"teahub.io/momar/config"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 	ics.DeleteTempFiles = true
-	c := config.Open("/var/E-Ink/config.yaml")
+	c := config.Open("./config.yml")
 	fmt.Println("Update Data....")
 	everything := []ics.Event{}
 	for _, e := range c.Get("Server").StringList() {
@@ -40,7 +41,9 @@ func main() {
 
 	}
 
-	err := ioutil.WriteFile("/var/E-Ink/cache.txt", []byte(stamp()+returnString), 0644)
+	returnString = strings.Replace(returnString, "\\", "", -1)
+	fmt.Println("Writing: ", returnString)
+	err := ioutil.WriteFile("./cache.txt", []byte(stamp()+returnString), 0644)
 	if err != nil {
 		fmt.Println("Error writing File")
 	}
@@ -73,7 +76,7 @@ func next5Events(url string) []ics.Event {
 				}
 			}
 		}
-		fmt.Printf("next 7 events are: \n %v\n", allEvents)
+		//fmt.Printf("next 7 events are: \n %v\n", allEvents)
 		return allEvents
 	}
 	return nil

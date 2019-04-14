@@ -2,6 +2,8 @@
 Ich wollte einen E-Ink Kalender mit einem ESP-8266 bauen. Da es noch keinen Code gab, der genau das machte, was ich wollte, habe ich angefangen nach ähnlichen Projekten zu suchen.
 [Link zum Client Code (ESP8266)](https://github.com/zottelchin/E-Ink-Kalender-Client)
 
+**Wichtig: Der Server darf nicht hinter einem https Proxy laufen, da sonst der ESP nicht drauf zugreifen kann.**
+
 # Hardware:
 - ESP8266 Waveshare ESP Driver Board [Waveshare-Seite](https://www.waveshare.com/wiki/E-Paper_ESP8266_Driver_Board)
 - Waveshare 4,2" ESP Raw Panel [Waveshare-Seite](https://www.waveshare.com/wiki/4.2inch_e-Paper_Module)
@@ -33,7 +35,7 @@ Der Client verbindet sich mit dem WLAN und ruft dann die voreingestellte Seite a
 - Adafruit Fonts
 ## Pläne für die Zukunft
 ### Server
-- Key an Route hängen, damit Daten halbwegs sicher sind
-- .ics Links aus Datei lesen
+- [x] Key an Route hängen, damit Daten halbwegs sicher sind
+- [x] .ics Links aus Datei lesen
 ### Client
 - [x] UTF-8 Unterstützung U8g2-Font ist aktuell der Plan 
