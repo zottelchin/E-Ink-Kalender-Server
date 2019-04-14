@@ -3,7 +3,7 @@ Description=Kalender Server
 
 [Service]
 Type=simple
-ExecStart=/var/noten/e-ink
+ExecStart=/var/e-ink/server
 Restart=on-failure
 WorkingDirectory=/var/e-ink
 
